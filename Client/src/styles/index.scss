@@ -1,0 +1,25 @@
+// variable
+
+// color
+$dark-mode: #0D1C2E;
+$secondary-color: #2A8BF2;
+$app-pink: #FF3366;
+$app-gray: #707C97 ;
+$app-white: #FAFBFF;
+$light-mode: #FFFFFF;
+
+// font-size
+$font-medium: 300;
+$font-bold: 500;
+$font-light: 100;
+
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+body{
+    font-family: 'Open Sans', sans-serif;
+}
