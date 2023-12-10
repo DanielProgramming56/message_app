@@ -2,7 +2,8 @@ const express = require('express')
 require('dotenv').config()
 const connectDB = require('./config/connectDB')
 const api = require('./routes/api')
-const {errorHandle, invalidRouteError} = require('./middleware/handleError')
+const { errorHandle, invalidRouteError } = require('./middleware/handleError')
+const { messageConnection } = require('./chats/index')
 // Application
 const app = express()
 
@@ -18,5 +19,5 @@ app.use(errorHandle)
 // port 
 const port = process.env.PORT
 connectDB()
-
-app.listen(port, ()  => console.log(`Your application is running in PORT: ${port}`))
+messageConnection()
+app.listen(port, () => console.log(`Your application is running in PORT: ${port}`))

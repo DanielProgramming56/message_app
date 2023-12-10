@@ -2,8 +2,9 @@ const mongoose = require('mongoose')
 
 
 const MessageSchema = new mongoose.Schema({
-    user_name: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-    message: String
+    user_name: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    message: String,
+    room: String
 })
 
 

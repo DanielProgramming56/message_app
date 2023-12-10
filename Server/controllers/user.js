@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 
 const getAllUser = async (req, res, next) => {
     try {
-        const users = await User.find({})
+        const users = await User.find({}).select('-chats')
         if (users.length <= 0) {
             res.status(404).json({ message: 'There was no user found in the database' })
             return;
@@ -67,11 +67,28 @@ const loginUser = async (req, res, next) => {
     }
 }
 
-const editProfile = async  (req, res, next) => {
+const editProfile = async (req, res, next) => {
     try {
-        
+        const {id} = req.params
+        const {user_name: newUserName, profile_img } = req.body;
+
+        const userWithNewName = await User.findOne({ user_name: newUserName });
+
+        if (userWithNewName && userWithNewName._id !== id) {
+            return res.status(400).json({ message: `User with the name ${newUserName} already exists. Please choose another user_name.` });
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(id, { user_name: newUserName, profile_img }, { new: true }).select('-chats');
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: `User with id ${id} not found.` });
+        }
+
+        res.status(200).json({ message: 'Profile updated successfully', data: updatedUser });
+
     } catch (error) {
-        
+        next(error);
     }
-}
-module.exports = { getAllUser, registerUser, loginUser }
+};
+
+module.exports = { getAllUser, registerUser, loginUser, editProfile }
